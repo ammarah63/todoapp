@@ -1,33 +1,46 @@
 import { useState } from "react";
 
 
-const Todo = ({ todo, onDelete, onUpdateNote }) => {
-  const [note, setNote] = useState(todo.note);
+const Todo = ({ todo, onDelete, onUpdateNote, onToggle }) => {
+ const [note, setNote] = useState(todo.note);
+ const [isChecked, setIsChecked] = useState(todo.isChecked);
 
-  const handleNoteChange = (e) => {
-    setNote(e.target.value);
-    onUpdateNote({
-      ...todo,
-      note: e.target.value,
-    });
+ const handleNoteChange = (e) => {
+   setNote(e.target.value);
+   onUpdateNote({
+     ...todo,
+     note: e.target.value,
+   });
+ };
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+    onToggle(todo.id, e.target.checked); 
   };
 
   return (
     <>
-      <div className="flex justify-between items-center space-x-2">
-        <div className="flex items-center space-x-3 my-2 flex-grow">
+      <div className="flex justify-between items-center space-x-0 md:space-x-2">
+        <div className="flex items-center space-x-1 md:space-x-3 my-2 flex-grow">
           <input
             type="checkbox"
-            defaultChecked
+            onChange={handleCheckboxChange}
+            checked={isChecked}
             className="checkbox checkbox-sm [--chkbg:theme(colors.primary)]"
           />
-          <span className="label-text flex-grow">
+          <span
+            className={`label-text flex-grow ${
+              isChecked ? "text-[#999] line-through" : ""
+            }`}
+          >
             <input
               type="text"
               value={note}
               onChange={handleNoteChange}
               placeholder={todo.note}
-              className="input input-ghost input-xs min-w-full"
+              className={`input input-ghost 3xl:text-lg 4xl:text-xl input-xs w-6/12 md:min-w-full ${
+                isChecked ? "text-[#999] line-through" : ""
+              }`}
               style={{ flex: "1" }}
             />
           </span>

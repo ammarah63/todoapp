@@ -20,6 +20,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  height: 100%;
   background: linear-gradient(
       to bottom,
       transparent,
@@ -27,6 +28,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
 
 @layer utilities {
   .text-balance {

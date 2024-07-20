@@ -15,6 +15,11 @@ module.exports = {
       colors: {
         primary: "#BE9F56",
       },
+      screens: {
+        xl: "1366px",
+        "3xl": "1920px",
+        "4xl": "2560px",
+      },
     },
   },
   plugins: [require("daisyui")],
