@@ -28,7 +28,7 @@ const List = ({ handleGetData }) => {
         Todos: todo || [],
         DoneTodos: donetodo || [],
       });
-      
+
       handleGetData();
 
       setIsSubmitted(true);
@@ -108,12 +108,12 @@ const List = ({ handleGetData }) => {
         setDonetodo([]);
       }
     };
-    if (expanded) {
+    if (expanded && (notes || todo.length > 0)) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      if (expanded) {
+      if (expanded && (notes || todo.length > 0)) {
         document.removeEventListener("mousedown", handleClickOutside);
       }
     };

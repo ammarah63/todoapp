@@ -1,15 +1,22 @@
 import { List, TodoNotes } from "@/components";
 import { db } from "@/firebaseConfig";
-import { ref, get, onValue, remove } from "firebase/database";
+import { setNotes } from "@/redux/slices/NotesSlice";
+import { ref, get, onValue, remove, query } from "firebase/database";
+import { onSnapshot, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    handleGetData();
+    const newdoc = ref(db, "mytodos");
+    onValue(newdoc, (snapshot) => {
+      handleGetData();
+    });
   }, []);
 
   const handleGetData = async (e) => {
@@ -18,6 +25,7 @@ export default function Home() {
       const snapshot = await get(newdoc);
       if (snapshot) {
         setData(Object.values(snapshot.val()));
+        dispatch(setNotes(Object.values(snapshot.val())));
         console.log(data);
       }
 
